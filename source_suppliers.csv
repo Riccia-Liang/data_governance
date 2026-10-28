@@ -1,0 +1,9 @@
+source_system,source_id,supplier_name,country,tax_id,payment_terms,bank_account
+ERP_A,A001,Meridian Components,CN,SYN-CN-1001,NET30,DEMO-0001
+ERP_B,B014,  Meridian  Components  ,cn,syn-cn-1001,net30,demo-0001
+ERP_A,A002,Harbor Sensors,US,SYN-US-2002,NET45,DEMO-0002
+ERP_B,B015,Harbor Sensing,US,SYN-US-2002,NET45,DEMO-0002
+ERP_A,A003,Northstar Devices,DE,,NET30,DEMO-0003
+ERP_B,B016,Northstar Devices,DE,SYN-DE-3003,NET30,DEMO-0003
+ERP_A,A004,Cedar Circuits,CN,SYN-CN-4004,NET90,DEMO-0004
+ERP_B,B017,Cedar Circuits,CN,SYN-CN-4004,NET30,DEMO-0004

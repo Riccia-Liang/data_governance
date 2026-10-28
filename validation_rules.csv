@@ -1,0 +1,9 @@
+rule_id,category,field,rule,failure_action,limitation
+DQ01,Completeness,all supplier fields,All five supplier fields are populated,Block validation and open an issue,Checks presence rather than truth
+DQ02,Validity,country,Country is CN or US or DE,Block validation and open an issue,Small demo allowlist
+DQ03,Validity,tax_id,Synthetic ID follows SYN-country-1234,Block validation and open an issue,Not real tax validation
+DQ04,Validity,payment_terms,Terms are NET30 or NET45 or NET60,Block validation and open an issue,Invented business policy
+DQ05,Validity,bank_account,Fictional token follows DEMO-1234,Block validation and open an issue,Not a real bank account check
+MDM01,Uniqueness,country plus tax_id,No other active supplier has this identity,Block validation or subsequent approval/application,Does not perform fuzzy matching
+CTL01,Authorization evidence,verification_ref,Creation or bank change has a verification reference,Block validation or subsequent approval/application,Nonempty reference is simulated evidence only
+CTL02,Concurrency,expected_version,Current master version equals submission version,Block validation or subsequent approval/application,Resubmit after reviewing a stale proposal

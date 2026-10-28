@@ -1,0 +1,68 @@
+table_name,field,type,description
+actors,actor_id,TEXT,Fictional actor name; no authentication
+actors,role,TEXT,requester or steward or approver
+source_records,source_system,TEXT,ERP_A or ERP_B; part of composite source key
+source_records,source_id,TEXT,Identifier within source system; part of composite source key
+source_records,payload,JSON TEXT,Raw supplier fields retained unchanged
+suppliers,supplier_id,TEXT,Unified master identifier such as SUP-001
+suppliers,supplier_name,TEXT,Reviewed display name
+suppliers,country,TEXT,Demo country allowlist CN US DE
+suppliers,tax_id,TEXT,Fictional tax identifier; unique together with country
+suppliers,payment_terms,TEXT,Invented allowed values NET30 NET45 NET60
+suppliers,bank_account,TEXT,Fictional DEMO-1234 token; never a real account
+suppliers,version,INTEGER,Starts at one and increments for applied updates
+source_mapping,source_system,TEXT,Source system from source_records composite key
+source_mapping,source_id,TEXT,Source identifier from source_records composite key
+source_mapping,supplier_id,TEXT,Reviewed link to unified master
+source_mapping,reviewed_by,TEXT,Steward who records the manual match decision
+source_mapping,decision_note,TEXT,Reason for the mapping and field-selection decision
+source_mapping,reviewed_at,UTC TEXT,Time mapping was recorded
+requests,request_id,INTEGER,Generated request identifier
+requests,kind,TEXT,CREATE or UPDATE
+requests,supplier_id,TEXT,Target ID; may not yet exist for CREATE
+requests,requester,TEXT,Actor submitting proposal
+requests,reason,TEXT,Required business explanation
+requests,verification_ref,TEXT,Simulated verification evidence reference
+requests,payload,JSON TEXT,Immutable normalized proposed values
+requests,before_payload,JSON TEXT,Master values at submission; empty for CREATE
+requests,expected_version,INTEGER,Master version at submission; zero for CREATE
+requests,status,TEXT,SUBMITTED VALIDATION_FAILED VALIDATED APPROVED REJECTED APPLIED
+requests,validator,TEXT,Steward who performed validation
+requests,approver,TEXT,Independent approver; null before approval
+requests,decision_note,TEXT,Approval or rejection explanation
+requests,created_at,UTC TEXT,Submission timestamp
+requests,approved_at,UTC TEXT,Approval timestamp
+requests,applied_at,UTC TEXT,Activation timestamp
+validation_results,result_id,INTEGER,Generated check-result identifier
+validation_results,request_id,INTEGER,Request being checked
+validation_results,rule_id,TEXT,Rule from validation_rules.csv
+validation_results,passed,INTEGER,One for pass and zero for fail
+validation_results,detail,TEXT,Description of checked condition
+validation_results,checked_at,UTC TEXT,Validation timestamp
+erp_snapshot,supplier_id,TEXT,Unified ID represented in simulated ERP
+erp_snapshot,payload,JSON TEXT,Copy of most recently synchronized master fields
+erp_snapshot,version,INTEGER,Most recently synchronized master version
+erp_snapshot,synced_at,UTC TEXT,Successful synchronization timestamp
+sync_attempts,attempt_id,INTEGER,Generated attempt identifier
+sync_attempts,supplier_id,TEXT,Supplier targeted for synchronization
+sync_attempts,version,INTEGER,Master version attempted
+sync_attempts,status,TEXT,SUCCESS or FAILED
+sync_attempts,detail,TEXT,Outcome explanation
+sync_attempts,attempted_at,UTC TEXT,Attempt timestamp
+issues,issue_id,INTEGER,Generated rule-level issue identifier
+issues,request_id,INTEGER,Original failed request
+issues,rule_id,TEXT,Original failed validation rule
+issues,owner,TEXT,Steward responsible for investigation
+issues,status,TEXT,OPEN INVESTIGATING REMEDIATED CLOSED
+issues,root_cause,TEXT,Recorded explanation of source problem
+issues,remediation,TEXT,Recorded corrective action
+issues,replacement_request_id,INTEGER,Applied replacement for the same supplier
+issues,retested_by,TEXT,Independent approver closing after fresh checks
+issues,opened_at,UTC TEXT,Issue creation timestamp
+issues,closed_at,UTC TEXT,Successful independent retest and closure timestamp
+audit_events,event_id,INTEGER,Ordered event sequence
+audit_events,event_at,UTC TEXT,Event timestamp
+audit_events,actor,TEXT,Actor who performed successful action
+audit_events,action,TEXT,Workflow event such as SUBMIT APPROVE APPLY or RETEST_AND_CLOSE
+audit_events,object_ref,TEXT,Request issue source or supplier reference
+audit_events,detail,JSON TEXT,Event evidence including before-after data where applicable
