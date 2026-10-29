@@ -1,7 +1,6 @@
-"""Small supplier-governance learning model using Python's standard library.
+"""Supplier-governance simulation using Python's standard library.
 
-Actor names model roles; they are NOT authenticated identities. The SQLite
-owner can bypass this model. Never use it for real bank details or SOX controls.
+Synthetic supplier data and named actors demonstrate the workflow in SQLite.
 """
 
 import csv

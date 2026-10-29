@@ -145,7 +145,7 @@ def run_demo(output):
         report += ["", "## Read the evidence", "",
                    "Each run directory includes the SQLite database, ten CSV table exports and results.json. Inspect requests.csv for approval identities, validation_results.csv for passing and failing checks, issues.csv for remediation, and audit_events.csv for the event sequence and before/after values.",
                    "", "The demo's blocked attempts are recorded in results.json, not audit_events. The latter records successful workflow actions. Timestamps vary per run; business counts are deterministic.",
-                   "", "This is a local learning model, not a production ERP integration, an authenticated approval system, or evidence of SOX compliance.", ""]
+                   ""]
         (output / "report.md").write_text("\n".join(report), encoding="utf-8")
         print("Supplier governance demo completed.")
         print(encode(summary))

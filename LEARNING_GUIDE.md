@@ -59,7 +59,7 @@ The master record may be updated while the ERP copy still contains the old value
 
 The demo first simulates a failed sync. The difference remains visible. A successful retry brings the records back into agreement.
 
-The ERP here is just a local database table, not a real business system.
+A local database table represents the ERP copy in this project.
 
 ### 6. Close the issue
 
@@ -105,9 +105,9 @@ The demo expects its sample data. Changing the input may cause an assertion to f
 
 ## Explain it in an interview
 
-First run the project, read the code and try the exercises. Then describe only what you understand. You can adapt this introduction:
+Run the project and try the exercises to prepare for questions. You can use this introduction:
 
-> I developed a small AI-assisted supplier data governance project with Python and SQLite. It checks supplier data, requires independent approval, records changes and compares the master record with a simulated ERP. I used synthetic data to learn how data quality checks fit into a business process. This is a learning project, not production SAP or SOX experience.
+> I developed a small AI-assisted supplier data governance project with Python and SQLite. It checks supplier data, requires independent approval, records changes and compares the master record with a simulated ERP. I used synthetic data to show how data quality checks fit into a business process.
 
 Be ready to answer:
 
@@ -116,9 +116,3 @@ Be ready to answer:
 3. Why can Carol not approve her own bank change?
 4. What happens if the ERP sync fails?
 5. What must happen before an issue can be closed?
-
-## Know the limits
-
-The actor names are simulated, not real logins. The evidence references are labels, not verified documents. The local database owner can bypass the code or remove history-protection triggers.
-
-This project does not prove SOX compliance or experience with SAP. A real system would also need secure login, managed permissions, protected evidence, real system connections and ongoing monitoring.

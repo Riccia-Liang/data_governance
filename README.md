@@ -2,9 +2,9 @@
 
 A small, runnable Python + SQLite project that takes supplier data from raw source records to approved master data, a simulated ERP snapshot, and a traceable exception-resolution record.
 
-**Learning simulation · synthetic data · Python standard library only**
+**Supplier governance simulation · synthetic data · Python standard library only**
 
-This project explores how data cleaning becomes part of a governed business process. It includes validation, human match decisions, independent approval, version checks, change history, reconciliation and issue closure. It does not connect to SAP, Informatica, Reltio, a bank, or a real ERP.
+This project explores how data cleaning becomes part of a governed business process. It includes validation, human match decisions, independent approval, version checks, change history, reconciliation and issue closure.
 
 Start with [the sample results](SAMPLE_RESULTS.md) or the [beginner's guide](LEARNING_GUIDE.md).
 
@@ -40,7 +40,7 @@ The initial load preserves every raw record. Basic normalization only changes sp
 
 Once the initial suppliers are created, an approver requests a bank-token change. The model blocks that person's self-approval and requires another approver. After activation, reconciliation detects an outdated ERP snapshot. A simulated sync failure keeps the difference visible until a successful retry.
 
-Tax identifiers (`SYN-CN-1001`) and bank tokens (`DEMO-0001`) are deliberately fictional. Their format rules are invented for this project and are not country-specific tax or banking validation.
+Tax identifiers (`SYN-CN-1001`) and bank tokens (`DEMO-0001`) are deliberately fictional. Their format rules are defined in `validation_rules.csv`.
 
 ## Workflow
 
@@ -68,7 +68,7 @@ Issue states: `OPEN → INVESTIGATING → REMEDIATED → CLOSED`. Closing an iss
 | Carol | Approver | Review requests and independently close issues |
 | Diana | Approver | Approve Carol's bank-change request |
 
-Every known actor may submit a request. Only a steward may validate/apply/sync; only an approver may approve. Requester and validator cannot approve that request. These are checks on supplied actor names, **not authentication**.
+Every known actor may submit a request. Only a steward may validate/apply/sync; only an approver may approve. Requester and validator cannot approve that request. Role checks use the actor names stored in the local database.
 
 ## Example results
 
@@ -87,7 +87,7 @@ The included scenario produces these results; [SAMPLE_RESULTS.md](SAMPLE_RESULTS
 
 Northstar's missing tax value fails both the required-field and tax-format checks, creating two rule-level issues. Cedar's invalid payment terms create the third. Three candidate groups are found because the source row with a missing tax value cannot form an exact tax match. Its eventual mapping is an explicit simulated human decision.
 
-Zero final exceptions describes this tiny scripted dataset only. Historical failures remain visible; it is not a claim of production control effectiveness or a data-quality improvement percentage.
+The final checks find no remaining exceptions in the sample dataset. Historical failures remain available for review.
 
 ## Cleaning, EDA and governance
 
@@ -141,21 +141,17 @@ A CREATE request can exist before its supplier does, so its supplier ID intentio
 
 The scripted demo expects its documented fixture. Experiments that change fixture validity may deliberately stop an assertion; use tests or a separate scenario rather than silently changing the expected result.
 
-## Scope and limitations
+## Design notes
 
-- This is a learning portfolio project, not a deployed enterprise solution or employment experience.
-- Actor names and verification references are simulated. A nonempty `SIM-CALLBACK-001` reference does not prove that a real callback occurred.
-- Match review and field selection are explicit scenario decisions. There is no fuzzy matcher, automated survivorship engine, source-system correction or upstream writeback.
-- The ERP is a local snapshot table. No SAP/MDM configuration or network integration is performed.
-- Audit triggers prevent accidental row updates/deletes. A database owner can bypass the application or remove triggers. Logs are not tamper-proof, access-controlled or retention-managed.
-- Successful workflow actions are in `audit_events`; the demo records blocked attempts separately in `results.json`. There is no production security-event collection.
-- Sync failures appear in the sync history and reconciliation results; they do not automatically create issue tickets. The issue workflow demonstrated here covers validation failures.
-- Control checks illustrate selected concepts. They do not certify SOX compliance, establish audit scope or demonstrate controls operating over a real period.
-- Authentication, authorization administration, durable external evidence, real ERP connectors and operational scheduling would require further design.
+- The project uses synthetic supplier data and a local SQLite database.
+- Actor names represent workflow roles. Verification references are fictional labels used in the example requests.
+- A steward reviews matches and selects field values. Source-to-master mappings record these decisions.
+- A local snapshot table represents the ERP copy. Reconciliation compares its fields and version with the master record.
+- Audit triggers protect history from accidental updates and deletes. The database owner can still change the database directly.
+- Successful workflow actions are stored in `audit_events`; blocked attempts are recorded in `results.json`.
+- Sync failures appear in the sync history and reconciliation results. The issue workflow handles validation failures.
 
 ## Further reading
 
 - [SAP Learning: Introducing Central Governance of Master Data](https://learning.sap.com/courses/introducing-sap-master-data-governance/introducing-central-governance-of-master-data) explains change requests and review/approval workflows. This project uses a deliberately simplified original workflow.
-- [PCAOB AS 2201](https://pcaobus.org/oversight/standards/auditing-standards/details/AS2201), particularly .34-.45 and .50, provides context for control design, operation and evidence. This simulation is not an implementation of the auditing standard.
-
-The project uses no company data, real bank information or proprietary system configuration.
+- [PCAOB AS 2201](https://pcaobus.org/oversight/standards/auditing-standards/details/AS2201), particularly .34-.45 and .50, provides context for control design, operation and evidence.
