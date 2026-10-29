@@ -102,17 +102,3 @@ The same input produces the same business counts. Timestamps change on each run.
 3. Pick one row in `risk_control_matrix.csv`. Explain the risk, who acts and what record they leave.
 
 The demo expects its sample data. Changing the input may cause an assertion to fail. For a different scenario, add a separate test or script and state the new expected result.
-
-## Explain it in an interview
-
-Run the project and try the exercises to prepare for questions. You can use this introduction:
-
-> I developed a small AI-assisted supplier data governance project with Python and SQLite. It checks supplier data, requires independent approval, records changes and compares the master record with a simulated ERP. I used synthetic data to show how data quality checks fit into a business process.
-
-Be ready to answer:
-
-1. Why did you keep the original records?
-2. Why did you review duplicate candidates instead of merging all of them?
-3. Why can Carol not approve her own bank change?
-4. What happens if the ERP sync fails?
-5. What must happen before an issue can be closed?
