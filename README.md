@@ -143,7 +143,7 @@ The scripted demo expects its documented fixture. Experiments that change fixtur
 
 ## Scope and limitations
 
-- This is an AI-assisted learning portfolio project, not a deployed enterprise solution or employment experience.
+- This is a learning portfolio project, not a deployed enterprise solution or employment experience.
 - Actor names and verification references are simulated. A nonempty `SIM-CALLBACK-001` reference does not prove that a real callback occurred.
 - Match review and field selection are explicit scenario decisions. There is no fuzzy matcher, automated survivorship engine, source-system correction or upstream writeback.
 - The ERP is a local snapshot table. No SAP/MDM configuration or network integration is performed.
@@ -151,7 +151,7 @@ The scripted demo expects its documented fixture. Experiments that change fixtur
 - Successful workflow actions are in `audit_events`; the demo records blocked attempts separately in `results.json`. There is no production security-event collection.
 - Sync failures appear in the sync history and reconciliation results; they do not automatically create issue tickets. The issue workflow demonstrated here covers validation failures.
 - Control checks illustrate selected concepts. They do not certify SOX compliance, establish audit scope or demonstrate controls operating over a real period.
-- This is a single-machine teaching model. Authentication, authorization administration, durable external evidence, real ERP connectors and operational scheduling would require further design.
+- Authentication, authorization administration, durable external evidence, real ERP connectors and operational scheduling would require further design.
 
 ## Further reading
 
